@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Для плавного серолла на переходах по якорным ссылкам */
 html {
   scroll-behavior: smooth;
 }

@@ -4,9 +4,11 @@ import { cn } from '@/lib/utils';
 import { ProductCard, Title } from '.';
 import { useIntersection } from 'react-use';
 import { useEffect, useRef } from 'react';
+import { useCategoryStore } from '@/app/store/category';
 
 interface ProductsGroupListProps {
   title: string;
+  id: string;
   items: any[];
   categoryId: number;
   listClassName?: string;
@@ -16,6 +18,7 @@ interface ProductsGroupListProps {
 export const ProductsGroupList = (props: ProductsGroupListProps) => {
   const { title, items, categoryId, listClassName, className } = props;
 
+  const setActiveCategoryId = useCategoryStore((state) => state.setActiveId);
   const intersectionRef = useRef(null);
   const intersection = useIntersection(intersectionRef, {
     threshold: 0.4,
@@ -24,7 +27,7 @@ export const ProductsGroupList = (props: ProductsGroupListProps) => {
   useEffect(() => {
     // Если объект в области видимости
     if (intersection?.isIntersecting) {
-      console.log(title, categoryId);
+      setActiveCategoryId(categoryId);
     }
   }, [intersection?.isIntersecting]);
 

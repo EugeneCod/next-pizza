@@ -1,3 +1,6 @@
+'use client';
+
+import { useCategoryStore } from '@/app/store/category';
 import { cn } from '@/lib/utils';
 
 interface CategoriesProps {
@@ -5,30 +8,30 @@ interface CategoriesProps {
 }
 
 const categories = [
-  'Пиццы',
-  'Комбо',
-  'Закуски',
-  'Коктейли',
-  'Кофе',
-  'Напитки',
-  'Десерты',
-  'Десерты',
+  { id: 1, name: 'Пиццы' },
+  { id: 2, name: 'Комбо' },
+  { id: 3, name: 'Закуски' },
+  { id: 4, name: 'Коктейли' },
+  { id: 5, name: 'Кофе' },
+  { id: 6, name: 'Напитки' },
+  { id: 7, name: 'Десерты' },
 ];
-const activeIndex = 0;
 
 export const Categories = (props: CategoriesProps) => {
+  const categoryActiveId = useCategoryStore((state) => state.activeId);
   const { className } = props;
   return (
-    <div className={(cn('inline-flex gap-1 bg-gray-50 p-1 rounded-2xl', className))}>
-      {categories.map((category, index) => (
+    <div className={cn('inline-flex gap-1 bg-gray-50 p-1 rounded-2xl', className)}>
+      {categories.map((category) => (
         <a
           className={cn(
             'flex items-center font-bold h-11 rounded-2xl px-5',
-            activeIndex === index && 'bg-white shadow-md shadow-gray-200 text-primary',
+            categoryActiveId === category.id && 'bg-white shadow-md shadow-gray-200 text-primary',
           )}
-          key={index}>
-            <button>{category}</button>
-          </a>
+          key={category.id}
+          href={`/#${category.name}`}>
+          <button>{category.name}</button>
+        </a>
       ))}
     </div>
   );
