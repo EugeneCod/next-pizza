@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
-import { Container } from './';
+import { Container, SearchInput } from './';
 import { Button } from '../ui';
 import {
   ArrowRight as ArrowRightIcon,
   ShoppingCart as ShoppingCartIcon,
   User as UserIcon,
 } from 'lucide-react';
+import Link from 'next/link';
 
 interface HeaderProps {
   className?: string;
@@ -18,12 +19,18 @@ export const Header = (props: HeaderProps) => {
   return (
     <header className={cn(' border-b', className)}>
       <Container className="flex items-center justify-between py-12">
-        <div className="flex items-center gap-4">
-          <Image src={'/logo.png'} alt="Логотип" width={35} height={35} />
-          <div>
-            <h1 className="text-2xl uppercase font-black">Next Pizza</h1>
-            <p className="text-sm text-gray-400 leading-3">вкусней уже некуда</p>
+        <Link href="/">
+          <div className="flex items-center gap-4">
+            <Image src={'/logo.png'} alt="Логотип" width={35} height={35} />
+            <div>
+              <h1 className="text-2xl uppercase font-black">Next Pizza</h1>
+              <p className="text-sm text-gray-400 leading-3">вкусней уже некуда</p>
+            </div>
           </div>
+        </Link>
+
+        <div className="mx-10 flex-1">
+          <SearchInput />
         </div>
 
         <div className="flex items-center gap-3">
