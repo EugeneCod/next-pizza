@@ -6,14 +6,15 @@ import { useSet } from 'react-use';
 interface ReturnProps {
   ingredients: Ingredient[];
   loading: boolean;
-  selectedIds: Set<string>;
+  selectedIngredients: Set<string>;
   onToggleId: (id: string) => void;
+ 
 }
 
-export const useFilterIngredients = (): ReturnProps => {
+export const useFilterIngredients = (ids?: string[]): ReturnProps => {
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedIds, { toggle}] = useSet(new Set<string>([]));
+  const [selectedIngredients, { toggle }] = useSet(new Set<string>([]));
 
   useEffect(() => {
     setLoading(true);
@@ -26,5 +27,9 @@ export const useFilterIngredients = (): ReturnProps => {
       .finally(() => setLoading(false));
   }, []);
 
-  return { ingredients, loading, selectedIds, onToggleId: toggle };
+  // function setSelectedIngredients(ids: string[]) {
+  //   ids.forEach(selectedIngredients.add);
+  // }
+
+  return { ingredients, loading, selectedIngredients, onToggleId: toggle };
 };

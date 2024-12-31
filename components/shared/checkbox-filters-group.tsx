@@ -10,7 +10,7 @@ type Item = FilterCheckboxProps;
 interface CheckboxFiltersGroupProps {
   title: string;
   items: Item[];
-  defaultItems: Item[];
+  defaultItems?: Item[];
   limit?: number;
   loading?: boolean;
   searchInputPlaceholder?: string;
@@ -53,7 +53,7 @@ export const CheckboxFiltersGroup = (props: CheckboxFiltersGroupProps) => {
 
   const list = showAll
     ? items.filter((item) => item.text.toLowerCase().includes(searchValue.toLowerCase()))
-    : defaultItems.slice(0, limit);
+    : (defaultItems || items).slice(0, limit);
 
   const onChangeSearchInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(evt.target.value);
