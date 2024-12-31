@@ -25,9 +25,12 @@ export const SearchInput = (props: SearchInputProps) => {
 
   useDebounce(
     () => {
-      Api.products.search(searchQuery).then((items) => {
-        setProducts(items);
-      });
+      Api.products
+        .search(searchQuery)
+        .then((items) => {
+          setProducts(items);
+        })
+        .catch(console.error);
     },
     200,
     [searchQuery],

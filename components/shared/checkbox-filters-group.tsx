@@ -1,20 +1,24 @@
 'use client';
 
-import { FilterCheckbox, FilterChecboxProps } from './filter-checkbox';
+import { FilterCheckbox, FilterCheckboxProps } from './filter-checkbox';
 import { Input } from '../ui/input';
 import { useState } from 'react';
+import { Skeleton } from '../ui';
 
-type Item = FilterChecboxProps;
+type Item = FilterCheckboxProps;
 
 interface CheckboxFiltersGroupProps {
   title: string;
   items: Item[];
   defaultItems: Item[];
   limit?: number;
+  loading?: boolean;
   searchInputPlaceholder?: string;
   className?: string;
-  onChange?: (values: string[]) => void;
+  onClickCheckbox?: (id: string) => void;
+  selectedIds?: Set<string>;
   defaultValue?: string[];
+  name?: string;
 }
 
 export const CheckboxFiltersGroup = (props: CheckboxFiltersGroupProps) => {
@@ -23,14 +27,29 @@ export const CheckboxFiltersGroup = (props: CheckboxFiltersGroupProps) => {
     items,
     defaultItems,
     limit = 5,
+    loading,
     searchInputPlaceholder = 'Поиск...',
     className,
-    onChange,
+    onClickCheckbox,
     defaultValue,
+    selectedIds,
+    name,
   } = props;
 
   const [showAll, setShowAll] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+
+  if (loading) {
+    return (
+      <div className={className}>
+        <p className="font-bold mb-3">{title}</p>
+        {new Array(limit).fill('').map((_, index) => (
+          <Skeleton key={index} className="h-6 mb-4 rounded-[8px]" />
+        ))}
+        <Skeleton className="w-28 h-6 rounded-[8px]" />
+      </div>
+    );
+  }
 
   const list = showAll
     ? items.filter((item) => item.text.toLowerCase().includes(searchValue.toLowerCase()))
@@ -57,8 +76,9 @@ export const CheckboxFiltersGroup = (props: CheckboxFiltersGroupProps) => {
       <div className="flex flex-col gap-4 max-h-96 pr-2 overflow-auto scrollbar">
         {list.map((item, index) => (
           <FilterCheckbox
-            onCheckedChange={(checked) => console.log(checked)}
-            checked={false}
+            name={name}
+            onCheckedChange={() => onClickCheckbox?.(item.value)}
+            checked={selectedIds?.has(item.value)}
             key={String(index)}
             value={item.value}
             text={item.text}
