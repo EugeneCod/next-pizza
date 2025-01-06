@@ -8,7 +8,6 @@ import { useCategoryStore } from '@/store/category';
 
 interface ProductsGroupListProps {
   title: string;
-  id: string;
   items: any[];
   categoryId: number;
   listClassName?: string;
