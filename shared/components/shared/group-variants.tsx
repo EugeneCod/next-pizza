@@ -5,7 +5,7 @@ import React from 'react';
 
 interface Variant {
   name: string;
-  value: string;
+  value: number;
   disabled?: boolean;
 }
 

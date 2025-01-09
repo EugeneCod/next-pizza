@@ -7,6 +7,7 @@ export { FilterCheckbox } from './filter-checkbox';
 export { Filters } from './filters';
 export { GroupVariants } from './group-variants';
 export { Header } from './header';
+export { IngredientItem } from './ingredient-item';
 export { ProductCard } from './product-card';
 export { PizzaImage } from './pizza-image';
 export { ProductsGroupList } from './products-group-list';

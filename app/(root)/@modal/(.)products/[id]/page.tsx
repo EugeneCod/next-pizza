@@ -1,6 +1,7 @@
 import { ChooseProductModal } from '@/shared/components/shared';
 import { prisma } from '@/prisma/prisma-client';
 import { notFound } from 'next/navigation';
+import { ProductWithRelations } from '@/types/prisma';
 
 export default async function ProductModalPage({ params: { id } }: PageWithParams) {
   const product = await prisma.product.findFirst({
@@ -15,5 +16,5 @@ export default async function ProductModalPage({ params: { id } }: PageWithParam
   if (!product) {
     return notFound();
   }
-  return <ChooseProductModal product={product} />;
+  return <ChooseProductModal product={product as ProductWithRelations} />;
 }
