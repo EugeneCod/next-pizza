@@ -24,6 +24,10 @@ interface PizzaSizes {
   value: PizzaSizeValue;
 }
 
+export interface PizzaSizeVariant extends PizzaSizes {
+  disabled: boolean;
+}
+
 export const pizzaSizes = Object.entries(mapPizzaSize).map(([value, name]) => ({
   name,
   value: Number(value),

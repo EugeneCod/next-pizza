@@ -15,11 +15,11 @@ export default async function ProductPage({ params: { id } }: PageWithParams) {
           <Title text={product.name} size="md" className="font-extrabold mb-1" />
           <p className="text-gray-400">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
           <GroupVariants
-            selectedValue="1"
+            selectedValue={1}
             items={[
-              { name: 'Маленькая', value: '1' },
-              { name: 'Средняя', value: '2' },
-              { name: 'Большая', value: '3' },
+              { name: 'Маленькая', value: 1 },
+              { name: 'Средняя', value: 2 },
+              { name: 'Большая', value: 3 },
             ]}
           />
         </div>
