@@ -2,13 +2,13 @@ import { cn } from '@/shared/lib/utils';
 import React from 'react';
 import { CountIconButton } from '.';
 
-export interface CountButtonProps extends PropsWithClassName {
+export interface CountButtonsProps extends PropsWithClassName {
   value?: number;
   size?: 'sm' | 'lg';
   onClick: (type: 'plus' | 'minus') => void;
 }
 
-export const CountButton = (props: CountButtonProps) => {
+export const CountButtons = (props: CountButtonsProps) => {
   const { className, onClick, value = 1, size = 'sm' } = props;
 
   return (

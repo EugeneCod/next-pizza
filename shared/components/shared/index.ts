@@ -8,7 +8,7 @@ export { CheckboxFiltersGroup } from './checkbox-filters-group';
 export { ChoosePizzaForm } from './choose-pizza-form';
 export { ChooseProductForm } from './choose-product-form';
 export { Container } from './container';
-export { CountButton } from './count-button';
+export { CountButtons } from './count-buttons';
 export { CountIconButton } from './count-icon-button';
 export { FilterCheckbox } from './filter-checkbox';
 export { Filters } from './filters';

@@ -7,6 +7,7 @@ import { Dialog, DialogContent } from '@/shared/components/ui';
 import { ChoosePizzaForm, ChooseProductForm } from '@/shared/components/shared';
 
 import { type ProductWithRelations } from '@/types/prisma';
+import { DialogDescription, DialogTitle } from '@radix-ui/react-dialog';
 
 interface ChooseProductModalProps {
   className?: string;
@@ -20,6 +21,8 @@ export const ChooseProductModal = (props: ChooseProductModalProps) => {
 
   return (
     <Dialog open={!!product} onOpenChange={() => router.back()}>
+      <DialogTitle />
+      <DialogDescription />
       <DialogContent
         className={cn(
           'p-0 w-full max-w-[1060px] min-h-[500px] bg-white overflow-hidden',

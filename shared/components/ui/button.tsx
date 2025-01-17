@@ -36,6 +36,10 @@ export interface ButtonProps
   asChild?: boolean;
 }
 
+interface CartSheetTriggerProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof buttonVariants> {}
+
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button';
@@ -46,4 +50,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = 'Button';
 
-export { Button, buttonVariants };
+const CartSheetTrigger = React.forwardRef<HTMLDivElement, CartSheetTriggerProps>(
+  ({ className, variant, size, ...props }, ref) => {
+    return (
+      <div className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
+    );
+  },
+);
+CartSheetTrigger.displayName = 'CartSheetTrigger';
+
+export { Button, CartSheetTrigger, buttonVariants };

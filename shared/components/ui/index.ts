@@ -1,4 +1,4 @@
-export { Button } from './button';
+export { Button, CartSheetTrigger } from './button';
 export { Checkbox } from './checkbox';
 export { Dialog, DialogContent } from './dialog';
 export { Drawer } from './drawer';
