@@ -74,3 +74,12 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     return NextResponse.json({ message: 'Не удалось удалить товар из корзины' }, { status: 500 });
   }
 }
+
+export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    const token = req.cookies.get('cartToken')?.value;
+  } catch (error) {
+    console.log('[CART_POST] Server error', error);
+    return NextResponse.json({ message: 'Не удалось создать корзину' }, { status: 500 });
+  }
+}
