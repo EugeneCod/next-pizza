@@ -1,5 +1,5 @@
 import { prisma } from '@/prisma/prisma-client';
-import { updateCartTotalAmount } from '@/shared/lib/update-cart-total-amount';
+import { updateCartTotalAmount } from '@/shared/lib';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
@@ -35,7 +35,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
     return NextResponse.json(updatedUserCart);
   } catch (error) {
-    console.log('[CART_PATCH] Server error', error);
+    console.log('[CART_ITEM_PATCH] Server error', error);
     return NextResponse.json({ message: 'Не удалось обновить корзину' }, { status: 500 });
   }
 }
@@ -70,16 +70,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
 
     return NextResponse.json(updatedUserCart);
   } catch (error) {
-    console.log('[CART_DELETE] Server error', error);
+    console.log('[CART_ITEM_DELETE] Server error', error);
     return NextResponse.json({ message: 'Не удалось удалить товар из корзины' }, { status: 500 });
-  }
-}
-
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
-  try {
-    const token = req.cookies.get('cartToken')?.value;
-  } catch (error) {
-    console.log('[CART_POST] Server error', error);
-    return NextResponse.json({ message: 'Не удалось создать корзину' }, { status: 500 });
   }
 }

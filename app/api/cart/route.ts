@@ -1,5 +1,8 @@
 import { prisma } from '@/prisma/prisma-client';
 import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'crypto';
+import { findOrCreateCart, updateCartTotalAmount } from '@/shared/lib';
+import { CreateCartItemValues } from '@/shared/services/dto/cart.dto';
 
 export async function GET(req: NextRequest) {
   try {
@@ -35,6 +38,68 @@ export async function GET(req: NextRequest) {
     });
     return NextResponse.json(userCart);
   } catch (error) {
-    console.error(error);
+    console.log('[CART_GET] Server error', error);
+    return NextResponse.json({ message: 'Не удалось получить корзину' }, { status: 500 });
+  }
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    let token = req.cookies.get('cartToken')?.value;
+
+    if (!token) {
+      token = crypto.randomUUID();
+    }
+
+    const userCart = await findOrCreateCart(token);
+
+    const data = (await req.json()) as CreateCartItemValues;
+
+
+
+
+    console.log(data.ingredientsIds);
+
+
+
+
+    
+
+    const findCartItem = await prisma.cartItem.findFirst({
+      where: {
+        cartId: userCart.id,
+        productItemId: data.productItemId,
+        ingredients: { every: { id: { in: data.ingredientsIds } } },
+      },
+    });
+
+    // Если товар уже ранее добавлялся в корзину, то прибавляется количество на 1
+    if (findCartItem) {
+      await prisma.cartItem.update({
+        where: {
+          id: findCartItem.id,
+        },
+        data: {
+          quantity: findCartItem.quantity + 1,
+        },
+      });
+    } else {
+      // Если товар ранее не добавлялся в корзину
+      await prisma.cartItem.create({
+        data: {
+          cartId: userCart.id,
+          productItemId: data.productItemId,
+          ingredients: { connect: data.ingredientsIds.map((id) => ({ id })) },
+        },
+      });
+    }
+
+    const updatedUserCart = await updateCartTotalAmount(token);
+    const response = NextResponse.json(updatedUserCart);
+    response.cookies.set('cartToken', token, { maxAge: 60 * 60 * 24 * 7 });
+    return response;
+  } catch (error) {
+    console.log('[CART_POST] Server error', error);
+    return NextResponse.json({ message: 'Не удалось создать корзину' }, { status: 500 });
   }
 }
