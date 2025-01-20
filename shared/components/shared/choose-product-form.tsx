@@ -2,19 +2,17 @@ import { cn } from '@/shared/lib/utils';
 import { Title } from '.';
 import { Button } from '../ui';
 
-interface ChooseProductFormProps {
+interface ChooseProductFormProps extends PropsWithClassName {
   className?: string;
   imageUrl: string;
   name: string;
-
-  onClickAdd?: VoidFunction;
+  price: number;
+  loading: boolean;
+  onClickAddCart: () => void;
 }
 
 export const ChooseProductForm = (props: ChooseProductFormProps) => {
-  const { className, imageUrl, name, onClickAdd } = props;
-
-  const textDetails = '30 см, традиционное тесто 30';
-  const totalPrice = 350;
+  const { className, imageUrl, name, price, loading, onClickAddCart } = props;
 
   return (
     <div className={cn('flex flex-1', className)}>
@@ -29,10 +27,11 @@ export const ChooseProductForm = (props: ChooseProductFormProps) => {
       <div className="w-[490px] bg-[#FCFCFC] p-7">
         <Title text={name} size="md" className="font-extrabold mb-1" />
 
-        <p className="text-gray-400">{textDetails}</p>
-
-        <Button className="h-14 px-10 text-base rounded-[18px] w-full mt-10">
-          Добавить в корзину за {totalPrice} ₽
+        <Button
+          loading={loading}
+          onClick={() => onClickAddCart()}
+          className="h-14 px-10 text-base rounded-[18px] w-full mt-10">
+          Добавить в корзину за {price} ₽
         </Button>
       </div>
     </div>

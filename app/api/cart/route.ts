@@ -2,7 +2,7 @@ import { prisma } from '@/prisma/prisma-client';
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { findOrCreateCart, updateCartTotalAmount } from '@/shared/lib';
-import { CreateCartItemValues } from '@/shared/services/dto/cart.dto';
+import { CreateCartItemDTO } from '@/shared/services/dto/cart.dto';
 
 export async function GET(req: NextRequest) {
   try {
@@ -53,17 +53,7 @@ export async function POST(req: NextRequest) {
 
     const userCart = await findOrCreateCart(token);
 
-    const data = (await req.json()) as CreateCartItemValues;
-
-
-
-
-    console.log(data.ingredientsIds);
-
-
-
-
-    
+    const data = (await req.json()) as CreateCartItemDTO;
 
     const findCartItem = await prisma.cartItem.findFirst({
       where: {

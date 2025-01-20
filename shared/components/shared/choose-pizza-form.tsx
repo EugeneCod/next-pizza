@@ -18,17 +18,19 @@ interface ChoosePizzaFormProps {
   name: string;
   ingredients: ProductWithRelations['ingredients'];
   items: ProductWithRelations['items'];
-  onClickAddCart?: VoidFunction;
+  loading: boolean;
+  onClickAddCart: (productItemId: number, ingredientsIds: Array<number>) => void;
 }
 
 export const ChoosePizzaForm = (props: ChoosePizzaFormProps) => {
-  const { className, imageUrl, name, ingredients, items, onClickAddCart } = props;
+  const { className, imageUrl, name, ingredients, items, loading, onClickAddCart } = props;
 
   const {
     availablePizzaSizes,
     selectedSize,
     selectedType,
     selectedIngredients,
+    currentPizzaId,
     changeSelectedSize,
     changeSelectedType,
     toggleIngredient,
@@ -54,7 +56,9 @@ export const ChoosePizzaForm = (props: ChoosePizzaFormProps) => {
   }, [selectedType]);
 
   function handleCLickAddCart() {
-    onClickAddCart?.();
+    if (currentPizzaId) {
+      onClickAddCart(currentPizzaId, Array.from(selectedIngredients));
+    }
   }
 
   return (
@@ -95,6 +99,7 @@ export const ChoosePizzaForm = (props: ChoosePizzaFormProps) => {
         </div>
 
         <Button
+          loading={loading}
           onClick={handleCLickAddCart}
           className="h-14 px-10 text-base rounded-[18px] w-full mt-6">
           Добавить в корзину за {totalPrice} ₽

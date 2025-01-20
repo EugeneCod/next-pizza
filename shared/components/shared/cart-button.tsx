@@ -1,20 +1,27 @@
+'use client';
+
 import { cn } from '@/shared/lib/utils';
-import { CartSheetTrigger } from '../ui';
+import { Button, CartSheetTrigger } from '../ui';
 import { ArrowRightIcon, ShoppingCartIcon } from 'lucide-react';
 import { CartDrawer } from './cart-drawer';
+import { useCartStore } from '@/shared/store';
 
 interface CartButtonProps extends PropsWithClassName {}
 
 export const CartButton = (props: CartButtonProps) => {
   const { className } = props;
+  const { totalAmount, loading, cartItems } = useCartStore((state) => state);
+
   return (
     <CartDrawer>
-      <CartSheetTrigger  className={cn('group relative', className)}>
-        <b>520 ₽</b>
+      <CartSheetTrigger
+        loading={loading}
+        className={cn('group relative', { 'w-[105px]': loading }, className)}>
+        <b>{totalAmount} ₽</b>
         <span className="h-full w-[1px] bg-white/30 mx-3" />
         <div className="flex items-center gap-1 transition duration-300 group-hover:opacity-0">
           <ShoppingCartIcon size={16} className="relative" strokeWidth={2} />
-          <b>3</b>
+          <b>{cartItems.length}</b>
         </div>
         <ArrowRightIcon
           size={20}

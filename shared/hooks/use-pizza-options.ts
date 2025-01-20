@@ -9,6 +9,7 @@ interface ReturnProps {
   selectedSize: PizzaSizeValue;
   selectedType: PizzaTypeValue;
   selectedIngredients: Set<number>;
+  currentPizzaId: number | undefined;
   changeSelectedSize: (size: PizzaSizeValue) => void;
   changeSelectedType: (size: PizzaTypeValue) => void;
   toggleIngredient: (id: number) => void;
@@ -24,6 +25,10 @@ export function usePizzaOptions(pizzas: ProductWithRelations['items']): ReturnPr
   const [selectedIngredients, { toggle: toggleIngredient }] = useSet(new Set<number>([]));
 
   const availablePizzaSizes = getAvailablePizzaSizes(pizzas, selectedType);
+
+  const currentPizzaId = pizzas.find(
+    (pizza) => pizza.pizzaType === selectedType && pizza.size === selectedSize,
+  )?.id || 1;
 
   useEffect(() => {
     const firstAvailableSize = availablePizzaSizes?.find((item) => !item.disabled);
@@ -49,6 +54,7 @@ export function usePizzaOptions(pizzas: ProductWithRelations['items']): ReturnPr
     selectedSize,
     selectedType,
     selectedIngredients,
+    currentPizzaId,
     changeSelectedSize,
     changeSelectedType,
     toggleIngredient,
