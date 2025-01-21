@@ -2,10 +2,10 @@ import { MinusIcon, PlusIcon } from 'lucide-react';
 import { Button } from '../ui';
 import { cn } from '@/shared/lib/utils';
 
-import type { CountButtonProps } from './count-buttons';
+import type { CountButtonsProps } from './count-buttons';
 
 interface CountIconButtonProps {
-  size?: CountButtonProps['size'];
+  size?: CountButtonsProps['size'];
   disabled?: boolean;
   type?: 'plus' | 'minus';
   onClick: () => void;

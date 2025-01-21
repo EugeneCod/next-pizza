@@ -1,6 +1,6 @@
 import { useSearchParams } from 'next/navigation';
 import { useSet } from 'react-use';
-import { type Dispatch, type SetStateAction, useState } from 'react';
+import { type Dispatch, type SetStateAction, useCallback, useMemo, useState } from 'react';
 
 interface PriceRange {
   priceFrom?: number;
@@ -52,22 +52,25 @@ export const useFilters = (): ReturnProps => {
     priceTo: Number(searchParams.get('priceTo')) || undefined,
   });
 
-  function changePriceRange(name: keyof PriceRange, value: number) {
+  const changePriceRange = useCallback((name: keyof PriceRange, value: number) => {
     setPriceRange({
       ...priceRange,
       [name]: value,
     });
-  }
+  }, []);
 
-  return {
-    selectedIngredients,
-    selectedSizes,
-    selectedPizzaTypes,
-    priceRange,
-    changePriceRange,
-    setPriceRange,
-    toggleIngredients,
-    toggleSizes,
-    togglePizzaTypes,
-  };
+  return useMemo(
+    () => ({
+      selectedIngredients,
+      selectedSizes,
+      selectedPizzaTypes,
+      priceRange,
+      changePriceRange,
+      setPriceRange,
+      toggleIngredients,
+      toggleSizes,
+      togglePizzaTypes,
+    }),
+    [selectedIngredients, selectedSizes, selectedPizzaTypes, priceRange],
+  );
 };

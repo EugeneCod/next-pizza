@@ -4,16 +4,16 @@ import { Title } from '.';
 import { Button } from '../ui';
 import { PlusIcon } from 'lucide-react';
 
-interface ProductCardProps {
+interface ProductCardProps extends PropsWithClassName {
   id: number;
   name: string;
   price: number;
   imageUrl: string;
-  className?: string;
+  ingredientNames: string[];
 }
 
 export const ProductCard = (props: ProductCardProps) => {
-  const { id, name, price, imageUrl, className } = props;
+  const { id, name, price, imageUrl, ingredientNames, className } = props;
   return (
     <Link className={cn('block', className)} href={`/products/${id}`}>
       <div className="flex justify-center p-6 bg-secondary rounded-lg h-[260px]">
@@ -23,7 +23,7 @@ export const ProductCard = (props: ProductCardProps) => {
       <Title text={name} size="sm" className="mb-1 mt-3 font-bold" />
 
       <p className="text-sm text-gray-400">
-        Цыпленок, моцарелла, сывы чеддер и пармезан, сырный соус альфредо, чеснок
+        {ingredientNames.join(', ')}
       </p>
 
       <div className="flex justify-between items-center mt-4">

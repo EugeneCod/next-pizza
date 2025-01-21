@@ -3,28 +3,19 @@
 import { Input } from '../ui';
 import { CheckboxFiltersGroup, RangeSlider, Title } from '.';
 import { useFilters, useIngredients, useQueryFilters } from '@/shared/hooks';
+import { pizzaSizes, pizzaTypes } from '@/shared/constants/pizza';
+import { memo } from 'react';
 
 interface FiltersProps {
   className?: string;
 }
-
-const sizeItems = [
-  { text: '20см', value: '20' },
-  { text: '30см', value: '30' },
-  { text: '40см', value: '40' },
-];
-
-const pizzaTypes = [
-  { text: 'Тонкое', value: '1' },
-  { text: 'Традиционное', value: '2' },
-];
 
 const initialPriceRange = {
   priceFrom: 0,
   priceTo: 2000,
 };
 
-export const Filters = (props: FiltersProps) => {
+export const Filters = memo((props: FiltersProps) => {
   const { className } = props;
 
   const { ingredients, loading } = useIngredients();
@@ -38,9 +29,9 @@ export const Filters = (props: FiltersProps) => {
       <Title text="Фильтрация" size="sm" className="mb-5 font-bold" />
 
       <CheckboxFiltersGroup
-        title="Размеры"
+        title="Тип теста"
         className="mb-5"
-        items={pizzaTypes}
+        items={pizzaTypes.map(({ name, value }) => ({ text: name, value: String(value) }))}
         onClickCheckbox={filters.togglePizzaTypes}
         selectedIds={filters.selectedPizzaTypes}
         name="sizes"
@@ -49,7 +40,7 @@ export const Filters = (props: FiltersProps) => {
       <CheckboxFiltersGroup
         title="Размеры"
         className="mb-5"
-        items={sizeItems}
+        items={pizzaSizes.map(({ name, value }) => ({ text: name, value: String(value) }))}
         onClickCheckbox={filters.toggleSizes}
         selectedIds={filters.selectedSizes}
         name="sizes"
@@ -100,4 +91,4 @@ export const Filters = (props: FiltersProps) => {
       />
     </div>
   );
-};
+});
