@@ -63,6 +63,7 @@ export const CartDrawer = (props: CartDrawerProps) => {
               name={item.name}
               price={item.price}
               quantity={item.quantity}
+              disabled={item.disabled}
               onClickCountButton={(type) => {
                 handleClickCountButton(item.id, item.quantity, type);
               }}

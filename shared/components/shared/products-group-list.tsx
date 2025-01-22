@@ -30,7 +30,6 @@ export const ProductsGroupList = (props: ProductsGroupListProps) => {
       setActiveCategoryId(categoryId);
     }
   }, [intersection?.isIntersecting]);
-  console.log(items);
 
   return (
     <div className={className} id={title} ref={intersectionRef}>

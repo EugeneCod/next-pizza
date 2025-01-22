@@ -20,12 +20,18 @@ export const CartDrawerItem = (props: CartDrawerItemProps) => {
     name,
     price,
     quantity,
+    disabled,
     onClickCountButton,
     onClickTrashIcon,
   } = props;
-
+  
   return (
-    <div className={cn('flex bg-white p-5 gap-6', className)}>
+    <div
+      className={cn(
+        'flex bg-white p-5 gap-6',
+        { 'opacity-50 pointer-events-none': disabled },
+        className,
+      )}>
       <CartItem.Image src={imageUrl} />
 
       <div className="flex-1">

@@ -8,6 +8,7 @@ export interface CartStateItem {
   name: string;
   imageUrl: string;
   price: number;
+  disabled?: boolean;
   pizzaSize?: PizzaSizeValue | null;
   pizzaType?: PizzaTypeValue | null;
   ingredients: Array<{ name: string; price: number }>;
@@ -26,6 +27,7 @@ export function getCartDetails(data: CartDTO): ReturnProps {
       name: item.productItem.product.name,
       imageUrl: item.productItem.product.imageUrl,
       price: calcCartItemTotalPrice(item),
+      disabled: false,
       pizzaSize: item.productItem.size,
       pizzaType: item.productItem.pizzaType,
       ingredients: item.ingredients.map((ingredient) => ({

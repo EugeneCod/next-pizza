@@ -53,15 +53,28 @@ export async function POST(req: NextRequest) {
 
     const userCart = await findOrCreateCart(token);
 
-    const data = (await req.json()) as CreateCartItemDTO;
+    const { productItemId, ingredientsIds } = (await req.json()) as CreateCartItemDTO;
 
-    const findCartItem = await prisma.cartItem.findFirst({
+    const ingredientsIdsString = ingredientsIds.toSorted((a, b) => a - b).toString();
+
+    const cartItemsByProductItemId = await prisma.cartItem.findMany({
       where: {
         cartId: userCart.id,
-        productItemId: data.productItemId,
-        ingredients: { every: { id: { in: data.ingredientsIds } } },
+        productItemId,
+      },
+      include: {
+        ingredients: true,
       },
     });
+
+    const cartItemsWithIngredientsIds = cartItemsByProductItemId.map((item) => ({
+      ...item,
+      ingredients: item.ingredients.map((ingredient) => ingredient.id).toSorted((a, b) => a - b),
+    }));
+
+    const findCartItem = cartItemsWithIngredientsIds.find(
+      (cartItem) => cartItem.ingredients.toString() === ingredientsIdsString,
+    );
 
     // Если товар уже ранее добавлялся в корзину, то прибавляется количество на 1
     if (findCartItem) {
@@ -78,8 +91,8 @@ export async function POST(req: NextRequest) {
       await prisma.cartItem.create({
         data: {
           cartId: userCart.id,
-          productItemId: data.productItemId,
-          ingredients: { connect: data.ingredientsIds.map((id) => ({ id })) },
+          productItemId,
+          ingredients: { connect: ingredientsIds.map((id) => ({ id })) },
         },
       });
     }
