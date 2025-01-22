@@ -50,7 +50,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : 'button';
     return (
       <Comp
-        aria-disabled={disabled || loading}
+        disabled={disabled || loading}
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}>
