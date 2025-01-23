@@ -2,6 +2,7 @@ export * from './cart-item-details';
 export * from './modals';
 
 export { CartButton } from './cart-button';
+export { CartDrawerItem } from './cart-drawer-item';
 export { CartDrawer } from './cart-drawer';
 export { Categories } from './categories';
 export { CheckboxFiltersGroup } from './checkbox-filters-group';

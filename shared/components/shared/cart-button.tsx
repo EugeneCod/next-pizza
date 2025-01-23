@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/shared/lib/utils';
-import { Button, CartSheetTrigger } from '../ui';
+import { Button } from '../ui';
 import { ArrowRightIcon, ShoppingCartIcon } from 'lucide-react';
 import { CartDrawer } from './cart-drawer';
 import { useCartStore } from '@/shared/store';
@@ -14,7 +14,7 @@ export const CartButton = (props: CartButtonProps) => {
 
   return (
     <CartDrawer>
-      <CartSheetTrigger
+      <Button
         loading={loading}
         className={cn('group relative', { 'w-[105px]': loading }, className)}>
         <b>{totalAmount} ₽</b>
@@ -27,7 +27,7 @@ export const CartButton = (props: CartButtonProps) => {
           size={20}
           className="absolute right-5 transition duration-300 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"
         />
-      </CartSheetTrigger>
+      </Button>
     </CartDrawer>
   );
 };
