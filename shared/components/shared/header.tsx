@@ -7,13 +7,15 @@ import Link from 'next/link';
 
 interface HeaderProps {
   className?: string;
+  hasSearch?: boolean;
+  hasCart?: boolean;
 }
 
 export const Header = (props: HeaderProps) => {
-  const { className } = props;
+  const { className, hasSearch = true, hasCart = true } = props;
 
   return (
-    <header className={cn(' border-b', className)}>
+    <header className={cn('border-b', className)}>
       <Container className="flex items-center justify-between py-12">
         <Link href="/">
           <div className="flex items-center gap-4">
@@ -25,16 +27,18 @@ export const Header = (props: HeaderProps) => {
           </div>
         </Link>
 
-        <div className="mx-10 flex-1">
-          <SearchInput />
-        </div>
+        {hasSearch && (
+          <div className="mx-10 flex-1">
+            <SearchInput />
+          </div>
+        )}
 
         <div className="flex items-center gap-3">
           <Button variant="outline" className="flex items-center gap-1">
             <UserIcon size={16} />
             Войти
           </Button>
-          <CartButton />
+          {hasCart && <CartButton />}
         </div>
       </Container>
     </header>

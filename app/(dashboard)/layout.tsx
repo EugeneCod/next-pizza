@@ -10,6 +10,7 @@ export default function DashboardLayout({
 }) {
   return (
     <html lang="ru">
+      DASHBOARD HEADER
       <body>{children}</body>
     </html>
   )

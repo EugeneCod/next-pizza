@@ -1,4 +1,4 @@
-export { Button, CartSheetTrigger } from './button';
+export { Button } from './button';
 export { Checkbox } from './checkbox';
 export { Dialog, DialogContent } from './dialog';
 export { Drawer } from './drawer';
@@ -8,3 +8,4 @@ export { Select } from './select';
 export * from './sheet';
 export { Skeleton } from './skeleton';
 export { Slider } from './slider';
+export { Textarea } from './textarea';
