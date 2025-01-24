@@ -19,33 +19,23 @@ import { CartDrawerItem, Title } from '.';
 
 import { cn } from '@/shared/lib/utils';
 import { getCartItemDetails } from '@/shared/lib';
-import { useCartStore } from '@/shared/store';
+import { useCart } from '@/shared/hooks';
 
 interface CartDrawerProps extends PropsWithClassName, PropsWithChildren {}
 
 export const CartDrawer = (props: CartDrawerProps) => {
   const { className, children } = props;
 
-  const { totalAmount, cartItems, fetchCartItems, updateItemQuantity, removeCartItem } =
-    useCartStore((state) => state);
-
-  useEffect(() => {
-    fetchCartItems();
-  }, []);
-
-  function handleClickCountButton(id: number, quantity: number, type: 'plus' | 'minus') {
-    const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
-    updateItemQuantity(id, newQuantity);
-  }
-
-  function handleClickTrashIcon(id: number) {
-    removeCartItem(id);
-  }
+  const { totalAmount, cartItems, removeCartItem, handleChangeItemQuantity } = useCart();
 
   return (
     <Sheet>
-      <SheetTrigger asChild className={cn(className)}>{children}</SheetTrigger>
-      <SheetContent className="flex flex-col justify-between pb-0 bg-[#F4F1EE]">
+      <SheetTrigger asChild className={cn(className)}>
+        {children}
+      </SheetTrigger>
+      <SheetContent
+        aria-describedby={'asdas'}
+        className="flex flex-col justify-between pb-0 bg-[#F4F1EE]">
         <div className={cn('flex flex-col h-full', !totalAmount && 'justify-center')}>
           {totalAmount > 0 && (
             <SheetHeader>
@@ -85,19 +75,13 @@ export const CartDrawer = (props: CartDrawerProps) => {
                     key={item.id}
                     id={item.id}
                     imageUrl={item.imageUrl}
-                    details={
-                      item.pizzaSize && item.pizzaType
-                        ? getCartItemDetails(item.pizzaType, item.pizzaSize, item.ingredients)
-                        : ''
-                    }
+                    details={getCartItemDetails(item.pizzaType, item.pizzaSize, item.ingredients)}
                     name={item.name}
                     price={item.price}
                     quantity={item.quantity}
                     disabled={item.disabled}
-                    onClickCountButton={(type) => {
-                      handleClickCountButton(item.id, item.quantity, type);
-                    }}
-                    onClickTrashIcon={handleClickTrashIcon}
+                    onClickCountButton={handleChangeItemQuantity}
+                    onClickRemove={removeCartItem}
                   />
                 ))}
               </div>
@@ -113,7 +97,7 @@ export const CartDrawer = (props: CartDrawerProps) => {
                     <span className="font-bold text-lg">{totalAmount} ₽</span>
                   </div>
 
-                  <Link href="/cart">
+                  <Link href="/checkout">
                     <Button type="submit" className="w-full h-12 text-base">
                       Оформить заказ
                       <ArrowRightIcon className="w-5 ml-2" />

@@ -6,6 +6,8 @@ export { CartDrawerItem } from './cart-drawer-item';
 export { CartDrawer } from './cart-drawer';
 export { Categories } from './categories';
 export { CheckboxFiltersGroup } from './checkbox-filters-group';
+export { CheckoutCartItemSkeleton } from './checkout-cart-item-skeleton';
+export { CheckoutCartItem } from './checkout-cart-item';
 export { CheckoutItemDetails } from './checkout-item-details';
 export { ChooseFormContainer } from './choose-form-container';
 export { ChoosePizzaForm } from './choose-pizza-form';

@@ -1,5 +1,6 @@
 import { prisma } from '@/prisma/prisma-client';
-import { CategoryWithProducts } from '@/types/prisma';
+
+import type { CategoryWithProducts } from '@/types/prisma';
 
 export interface GetSearchParams {
   query?: string;

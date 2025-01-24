@@ -2,13 +2,16 @@ import { mapPizzaType, type PizzaSizeValue, type PizzaTypeValue } from '../const
 import type { CartStateItem } from './get-cart-details';
 
 export function getCartItemDetails(
-  pizzaType: PizzaTypeValue,
-  pizzaSize: PizzaSizeValue,
+  pizzaType: PizzaTypeValue | null,
+  pizzaSize: PizzaSizeValue | null,
   ingredients: CartStateItem['ingredients'],
 ) {
   const details = [];
-  const typeName = mapPizzaType[pizzaType];
-  details.push(`${typeName} ${pizzaSize} см`);
+
+  if (pizzaType && pizzaSize) {
+    const typeName = mapPizzaType[pizzaType];
+    details.push(`${typeName} ${pizzaSize} см`);
+  }
 
   if (ingredients.length) {
     details.push(...ingredients.map((ingredient) => ingredient.name));

@@ -1,4 +1,4 @@
-import { type PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 import { Title } from '.';
 
@@ -13,7 +13,7 @@ interface WhiteBlockProps extends PropsWithChildren {
 
 export const WhiteBlock = (props: WhiteBlockProps) => {
   const { title, endAdornment, className, contentClassName, children } = props;
-  
+
   return (
     <div className={cn('bg-white rounded-3xl', className)}>
       {title && (

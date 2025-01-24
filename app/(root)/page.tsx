@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 
 export default async function Home({ searchParams }: PageWithSearchParams<GetSearchParams>) {
   const categoriesWithProducts = await getCategoriesWithProducts(searchParams);
-
+  
   return (
     <>
       <Container className="mt-10">

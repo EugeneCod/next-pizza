@@ -9,8 +9,8 @@ export interface CartStateItem {
   imageUrl: string;
   price: number;
   disabled?: boolean;
-  pizzaSize?: PizzaSizeValue | null;
-  pizzaType?: PizzaTypeValue | null;
+  pizzaSize: PizzaSizeValue | null;
+  pizzaType: PizzaTypeValue | null;
   ingredients: Array<{ name: string; price: number }>;
 }
 
