@@ -2,22 +2,17 @@
 
 import {
   CheckoutCartItem,
-  CheckoutItemDetails,
+  CheckoutSidebar,
   Container,
   Title,
   WhiteBlock,
 } from '@/shared/components/shared';
-import { Button, Input, Textarea } from '@/shared/components/ui';
+import { Input, Textarea } from '@/shared/components/ui';
 import { useCart } from '@/shared/hooks';
 import { getCartItemDetails } from '@/shared/lib';
-import { ArrowRightIcon, PackageIcon, PercentIcon, TruckIcon } from 'lucide-react';
 
 export default function CheckoutPage() {
-  const taxAmount = 111;
-  const shippingCost = 100;
-  const submitting = false;
-
-  const { totalAmount, cartItems, loading, removeCartItem, handleChangeItemQuantity } = useCart();
+  const { totalAmount, cartItems, removeCartItem, handleChangeItemQuantity } = useCart();
 
   return (
     <Container className="mt-10">
@@ -59,28 +54,7 @@ export default function CheckoutPage() {
         </div>
         {/* Правая колонка */}
         <div className="w-[450px]">
-          <WhiteBlock className="p-6 sticky top-4">
-            <div className="flex flex-col gap-1">
-              <span className="text-xl">Итого:</span>
-              <span className="text-[34px] font-extrabold">{3548} ₽</span>
-            </div>
-
-            <CheckoutItemDetails
-              title="Стоимость товаров"
-              IconComp={PackageIcon}
-              value={totalAmount}
-            />
-            <CheckoutItemDetails title="Налоги" IconComp={PercentIcon} value={taxAmount} />
-            <CheckoutItemDetails title="Доставка" IconComp={TruckIcon} value={shippingCost} />
-
-            <Button
-              type="submit"
-              disabled={!totalAmount || submitting}
-              className="w-full h-14 rounded-2xl mt-6 text-base font-bold">
-              Перейти к оплате
-              <ArrowRightIcon className="w-5 ml-2" />
-            </Button>
-          </WhiteBlock>
+          <CheckoutSidebar totalAmount={totalAmount} />
         </div>
       </div>
     </Container>

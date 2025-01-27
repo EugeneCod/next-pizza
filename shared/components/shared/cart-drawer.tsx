@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, type PropsWithChildren } from 'react';
+import { useEffect, useState, type PropsWithChildren } from 'react';
 import { ArrowLeft, ArrowRightIcon } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -27,6 +27,7 @@ export const CartDrawer = (props: CartDrawerProps) => {
   const { className, children } = props;
 
   const { totalAmount, cartItems, removeCartItem, handleChangeItemQuantity } = useCart();
+  const [redirecting, setRedirecting] = useState(false);
 
   return (
     <Sheet>
@@ -98,7 +99,13 @@ export const CartDrawer = (props: CartDrawerProps) => {
                   </div>
 
                   <Link href="/checkout">
-                    <Button type="submit" className="w-full h-12 text-base">
+                    <Button
+                      onClick={() => {
+                        setRedirecting(true);
+                      }}
+                      loading={redirecting}
+                      type="submit"
+                      className="w-full h-12 text-base">
                       Оформить заказ
                       <ArrowRightIcon className="w-5 ml-2" />
                     </Button>
