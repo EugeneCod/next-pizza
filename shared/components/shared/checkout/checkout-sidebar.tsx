@@ -1,7 +1,7 @@
 import { ArrowRightIcon, PackageIcon, PercentIcon, TruckIcon } from 'lucide-react';
 
-import { CheckoutItemDetails, WhiteBlock } from '.';
-import { Button } from '../ui';
+import { CheckoutItemDetails, WhiteBlock } from '..';
+import { Button } from '../../ui';
 
 const VAT = 15;
 const DELIVERY_PRICE = 100;
@@ -12,7 +12,7 @@ interface CheckoutSidebarProps {
 
 export const CheckoutSidebar = (props: CheckoutSidebarProps) => {
   const { totalAmount } = props;
-  
+
   // TODO доделать связь с состоянием отправки формы
   const submitting = false;
 

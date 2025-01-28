@@ -1,4 +1,6 @@
 export * from './cart-item-details';
+export * from './checkout';
+export * from './form';
 export * from './modals';
 
 export { CartButton } from './cart-button';
@@ -9,7 +11,6 @@ export { CheckboxFiltersGroup } from './checkbox-filters-group';
 export { CheckoutCartItemSkeleton } from './checkout-cart-item-skeleton';
 export { CheckoutCartItem } from './checkout-cart-item';
 export { CheckoutItemDetails } from './checkout-item-details';
-export { CheckoutSidebar } from './checkout-sidebar';
 export { ChooseFormContainer } from './choose-form-container';
 export { ChoosePizzaForm } from './choose-pizza-form';
 export { ChooseProductForm } from './choose-product-form';
