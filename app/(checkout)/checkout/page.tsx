@@ -1,10 +1,12 @@
 'use client';
 
-import { Controller, FormProvider, useForm, type SubmitHandler } from 'react-hook-form';
+import { useState } from 'react';
+import { FormProvider, useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import toast from 'react-hot-toast';
 
 import {
-  CheckoutAdressForm,
+  CheckoutAddressForm,
   CheckoutCart,
   CheckoutPersonalForm,
   CheckoutSidebar,
@@ -15,34 +17,47 @@ import {
 import { CheckoutFormSchema, checkoutFormSchema } from '@/shared/constants/checkout-form-schema';
 
 import { useCart } from '@/shared/hooks';
-import { IMaskInput } from 'react-imask';
-import { cn } from '@/shared/lib/utils';
+import { createOrder } from '@/app/actions';
 
 const defaultValues = {
   email: '',
   firstName: '',
   lastName: '',
   phone: '',
-  adress: '',
+  address: '',
   comment: '',
 };
 
 export default function CheckoutPage() {
-  const {
-    totalAmount,
-    cartItems,
-    loading,
-    removeCartItem,
-    handleChangeItemQuantity,
-  } = useCart();
+  const { totalAmount, cartItems, loading, removeCartItem, handleChangeItemQuantity } = useCart();
+  const [submitting, setSubmitting] = useState(false);
 
   const form = useForm<CheckoutFormSchema>({
     resolver: zodResolver(checkoutFormSchema),
     defaultValues,
   });
 
-  const onSubmit: SubmitHandler<CheckoutFormSchema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<CheckoutFormSchema> = async (data) => {
+    try {
+      setSubmitting(true);
+      const url = await createOrder(data);
+      toast.error('Заказ успешно оформлен! 📝 Переход на оплату... ', {
+        icon: '✅',
+      });
+
+      if (url) {
+        setTimeout(() => {
+          location.href = url;
+        }, 2500);
+      }
+    } catch (err) {
+      toast.error('Не удалось создать заказ', {
+        icon: '❌',
+      });
+      console.error(err);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -61,11 +76,15 @@ export default function CheckoutPage() {
                 onRemoveCartItem={removeCartItem}
               />
               <CheckoutPersonalForm className={loading ? 'opacity-30 pointer-events-none' : ''} />
-              <CheckoutAdressForm className={loading ? 'opacity-30 pointer-events-none' : ''} />
+              <CheckoutAddressForm className={loading ? 'opacity-30 pointer-events-none' : ''} />
             </div>
             {/* Правая колонка */}
             <div className="w-[450px]">
-              <CheckoutSidebar totalAmount={totalAmount} loading={loading} />
+              <CheckoutSidebar
+                submitting={submitting}
+                totalAmount={totalAmount}
+                loading={loading}
+              />
             </div>
           </div>
         </form>

@@ -124,7 +124,7 @@ model Order {
   totalAmount Int
   status    OrderStatus
   /* Сохранение идентификатора платежа для возможности отмены платежа */
-  paimentId String?
+  paymentId String?
   items     Json
   fullName  String
   address   String
@@ -133,7 +133,7 @@ model Order {
   comment   String?
 
   user      User? @relation(fields: [userId], references: [id])
-  userId    Int
+  userId    Int?
 }
 
 model VerificatonCode {

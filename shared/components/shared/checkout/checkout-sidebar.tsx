@@ -9,13 +9,14 @@ const DELIVERY_PRICE = 100;
 interface CheckoutSidebarProps {
   totalAmount: number;
   loading?: boolean;
+  submitting?: boolean;
 }
 
 export const CheckoutSidebar = (props: CheckoutSidebarProps) => {
-  const { totalAmount, loading } = props;
+  const { totalAmount, loading, submitting } = props;
 
   // TODO доделать связь с состоянием отправки формы
-  const submitting = false;
+
 
   const vatPrice = Math.trunc((totalAmount * VAT) / 100);
   const totalPrice = totalAmount + vatPrice + DELIVERY_PRICE;

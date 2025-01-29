@@ -1,4 +1,4 @@
-'use client';
+
 
 import type { InputHTMLAttributes } from 'react';
 import { AddressSuggestions } from 'react-dadata';
@@ -6,12 +6,12 @@ import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 import { cn } from '@/shared/lib/utils';
 
-interface AdressInputProps extends PropsWithClassName {
+interface AddressInputProps extends PropsWithClassName {
   onChange?: (value?: string) => void;
   placeholder?: string
 }
 
-export const AdressInput = (props: AdressInputProps) => {
+export const AddressInput = (props: AddressInputProps) => {
   const { className, onChange, placeholder } = props;
   const computedClassName = cn(
     `flex h-9 w-full rounded-md border border-input bg-transparent 

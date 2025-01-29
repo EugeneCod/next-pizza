@@ -1,12 +1,14 @@
+'use client'
+
 import { cn } from '@/shared/lib/utils';
 import { FormTextarea, WhiteBlock } from '..';
-import { AdressInput } from '../address-input';
+import { AddressInput } from '../address-input';
 import { Controller, useFormContext } from 'react-hook-form';
 import { ErrorText } from '../../ui';
 
-interface CheckoutAdressFormProps extends PropsWithClassName {}
+interface CheckoutAddressFormProps extends PropsWithClassName {}
 
-export const CheckoutAdressForm = (props: CheckoutAdressFormProps) => {
+export const CheckoutAddressForm = (props: CheckoutAddressFormProps) => {
   const { className } = props;
 
   const { control } = useFormContext();
@@ -18,7 +20,7 @@ export const CheckoutAdressForm = (props: CheckoutAdressFormProps) => {
           control={control}
           render={({ field, fieldState }) => (
             <>
-              <AdressInput onChange={field.onChange} placeholder="Адрес" />{' '}
+              <AddressInput onChange={field.onChange} placeholder="Адрес" />{' '}
               {fieldState.error?.message && <ErrorText text={fieldState.error?.message} />}
             </>
           )}
