@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import type { InputHTMLAttributes } from 'react';
 import { AddressSuggestions } from 'react-dadata';
 
 import 'react-dadata/dist/react-dadata.css';
@@ -8,10 +8,11 @@ import { cn } from '@/shared/lib/utils';
 
 interface AdressInputProps extends PropsWithClassName {
   onChange?: (value?: string) => void;
+  placeholder?: string
 }
 
 export const AdressInput = (props: AdressInputProps) => {
-  const { className, onChange } = props;
+  const { className, onChange, placeholder } = props;
   const computedClassName = cn(
     `flex h-9 w-full rounded-md border border-input bg-transparent 
     px-3 py-1 text-base shadow-sm transition-colors file:border-0 
@@ -27,7 +28,7 @@ export const AdressInput = (props: AdressInputProps) => {
       token={process.env.NEXT_PUBLIC_DADATA_API_KEY || ''}
       onChange={(data) => onChange?.(data?.value)}
       count={5}
-      inputProps={{ className: computedClassName }}
+      inputProps={{ className: computedClassName, placeholder }}
     />
   );
 };

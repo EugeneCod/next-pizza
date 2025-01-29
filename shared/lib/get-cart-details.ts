@@ -9,6 +9,7 @@ export interface CartStateItem {
   imageUrl: string;
   price: number;
   disabled?: boolean;
+  updating?: boolean;
   pizzaSize: PizzaSizeValue | null;
   pizzaType: PizzaTypeValue | null;
   ingredients: Array<{ name: string; price: number }>;

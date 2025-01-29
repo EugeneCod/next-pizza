@@ -16,6 +16,7 @@ import { CheckoutFormSchema, checkoutFormSchema } from '@/shared/constants/check
 
 import { useCart } from '@/shared/hooks';
 import { IMaskInput } from 'react-imask';
+import { cn } from '@/shared/lib/utils';
 
 const defaultValues = {
   email: '',
@@ -27,14 +28,18 @@ const defaultValues = {
 };
 
 export default function CheckoutPage() {
-  const { totalAmount, cartItems, removeCartItem, handleChangeItemQuantity } = useCart();
+  const {
+    totalAmount,
+    cartItems,
+    loading,
+    removeCartItem,
+    handleChangeItemQuantity,
+  } = useCart();
 
   const form = useForm<CheckoutFormSchema>({
     resolver: zodResolver(checkoutFormSchema),
     defaultValues,
-  
   });
-  
 
   const onSubmit: SubmitHandler<CheckoutFormSchema> = (data) => {
     console.log(data);
@@ -50,30 +55,17 @@ export default function CheckoutPage() {
             {/* Левая колонка */}
             <div className="flex flex-col flex-1 gap-y-10 mb-20">
               <CheckoutCart
+                loading={loading}
                 cartItems={cartItems}
                 onChangeCartItemQuantity={handleChangeItemQuantity}
                 onRemoveCartItem={removeCartItem}
               />
-              <CheckoutPersonalForm />
-             {/*  <Controller
-                name="phone"
-                control={form.control}
-                defaultValue=""
-                render={({ field }) => (
-                  <IMaskInput
-                    {...field}
-                    mask="+{7} (000) 000-00-00"
-                    placeholder="+7 (___) ___-__-__"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                  />
-                )}
-              />
-              <div>{form.formState.errors.phone?.message}</div> */}
-              <CheckoutAdressForm />
+              <CheckoutPersonalForm className={loading ? 'opacity-30 pointer-events-none' : ''} />
+              <CheckoutAdressForm className={loading ? 'opacity-30 pointer-events-none' : ''} />
             </div>
             {/* Правая колонка */}
             <div className="w-[450px]">
-              <CheckoutSidebar totalAmount={totalAmount} />
+              <CheckoutSidebar totalAmount={totalAmount} loading={loading} />
             </div>
           </div>
         </form>

@@ -12,4 +12,5 @@ export { Select } from './select';
 export * from './sheet';
 export { Skeleton } from './skeleton';
 export { Slider } from './slider';
+export { Spinner } from './spinner';
 export { Textarea } from './textarea';
