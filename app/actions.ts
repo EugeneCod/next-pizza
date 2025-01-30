@@ -3,8 +3,11 @@
 import { cookies } from 'next/headers';
 
 import { prisma } from '@/prisma/prisma-client';
-import { CheckoutFormSchema } from '@/shared/constants/checkout-form-schema';
+import { createPayment, sendEmail } from '@/shared/lib';
+
+import type { CheckoutFormSchema } from '@/shared/constants/checkout-form-schema';
 import { OrderStatus } from '@prisma/client';
+import { PayOrderEmailTemplate } from '@/shared/components/shared';
 
 export async function createOrder(data: CheckoutFormSchema) {
   try {
@@ -76,7 +79,43 @@ export async function createOrder(data: CheckoutFormSchema) {
       },
     });
 
-    // TODO Вернуть ссылку на оплату
-    return 'https://github.com/EugeneCod';
-  } catch (err) {}
+    // Создать платеж на платежном сервисе
+    const paymentData = await createPayment({
+      amount: order.totalAmount,
+      orderId: order.id,
+      description: 'Оплата заказа #' + order.id,
+    });
+
+    if (!paymentData) {
+      throw new Error('Не удалось создать платеж');
+    }
+
+    // Добавить в заказ БД идентификатор платежа
+    await prisma.order.update({
+      where: {
+        id: order.id,
+      },
+      data: {
+        paymentId: paymentData.id,
+      },
+    });
+
+    const paymentUrl = paymentData.confirmation.confirmation_url;
+
+    // Отправить письмо о платеже на почту пользователя
+    await sendEmail(
+      data.email,
+      'Next-Pizza / Оплатите заказ #' + order.id,
+      PayOrderEmailTemplate({
+        orderId: order.id,
+        totalAmount: order.totalAmount,
+        paymentUrl,
+      }),
+    );
+
+    // Вернуть ссылку на страницу с оплатой
+    return paymentUrl;
+  } catch (err) {
+    console.log('[CreateOrder] Server error', err);
+  }
 }

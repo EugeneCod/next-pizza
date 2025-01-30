@@ -41,15 +41,16 @@ export default function CheckoutPage() {
     try {
       setSubmitting(true);
       const url = await createOrder(data);
-      toast.error('Заказ успешно оформлен! 📝 Переход на оплату... ', {
+      if (!url) {
+        throw new Error('Ссылка на оплату не получена');
+      }
+      toast.success('Заказ успешно оформлен! 📝 Переход на оплату... ', {
         icon: '✅',
       });
 
-      if (url) {
-        setTimeout(() => {
-          location.href = url;
-        }, 2500);
-      }
+      setTimeout(() => {
+        location.href = url;
+      }, 2500);
     } catch (err) {
       toast.error('Не удалось создать заказ', {
         icon: '❌',

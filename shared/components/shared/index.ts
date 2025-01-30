@@ -1,5 +1,6 @@
 export * from './cart-item-details';
 export * from './checkout';
+export * from './email-templates';
 export * from './form';
 export * from './modals';
 
