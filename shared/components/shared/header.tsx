@@ -1,9 +1,15 @@
+'use client';
+
+import { useEffect } from 'react';
+import { UserIcon } from 'lucide-react';
 import Image from 'next/image';
-import { cn } from '@/shared/lib/utils';
+import Link from 'next/link';
+import { toast } from 'react-hot-toast';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+
 import { CartButton, Container, SearchInput } from '.';
 import { Button } from '../ui';
-import { UserIcon } from 'lucide-react';
-import Link from 'next/link';
+import { cn } from '@/shared/lib/utils';
 
 interface HeaderProps {
   className?: string;
@@ -13,6 +19,18 @@ interface HeaderProps {
 
 export const Header = (props: HeaderProps) => {
   const { className, hasSearch = true, hasCart = true } = props;
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (searchParams.has('paid')) {
+      setTimeout(() => {
+        toast.success('Заказ успешно оплачен! Информация отправлена на почту.');
+      }, 500);
+      router.replace(pathname);
+    }
+  }, []);
 
   return (
     <header className={cn('border-b', className)}>
