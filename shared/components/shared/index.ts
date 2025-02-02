@@ -26,6 +26,7 @@ export { IngredientItem } from './ingredient-item';
 export { PizzaImage } from './pizza-image';
 export { ProductCard } from './product-card';
 export { ProductsGroupList } from './products-group-list';
+export { ProfileButton } from './profile-button';
 export { Providers } from './providers';
 export { RangeSlider } from './range-slider';
 export { SearchInput } from './search-input';
