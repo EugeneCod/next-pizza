@@ -60,6 +60,8 @@ export const Header = (props: HeaderProps) => {
           <AuthModal
             open={authModalIsOpen}
             onClose={() => {
+              console.log('Закр окно');
+              
               setAuthModalIsOpen(false);
             }}
           />

@@ -31,6 +31,7 @@ model User {
   role      UserRole @default(USER)
   verified  DateTime
   /* Привязка к социальной сети, если авторизован через нее */
+  /* TODO Продумать возможность хранения массива провайдеров */
   provider  String?
   providerId String?
   cart      Cart?

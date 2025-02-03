@@ -24,7 +24,7 @@ export const AuthModal = (props: AuthModalProps) => {
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="w-[450px] bg-white p-10">
-        {type === 'login' ? <LoginForm onClose={() => {}} /> : <h1>REGISTER</h1>}
+        {type === 'login' ? <LoginForm onClose={handleClose} /> : <h1>REGISTER</h1>}
 
         <hr />
         <div className="flex gap-2">
