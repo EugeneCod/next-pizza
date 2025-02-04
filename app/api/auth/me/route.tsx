@@ -1,7 +1,5 @@
 import { prisma } from '@/prisma/prisma-client';
-/* import { AUTH_OPTIONS } from '@/shared/constants/auth-options'; */
 import { getUserSession } from '@/shared/lib/get-user-session';
-/* import { getServerSession } from 'next-auth/next'; */
 import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
