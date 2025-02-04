@@ -147,3 +147,20 @@ model VerificationCode {
   userId    Int @unique
   @@unique([userId, code])
 }
+
+model Story {
+  id        Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  previewImageUrl String
+  items StoryItem[]
+}
+
+model StoryItem {
+  id        Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  storyId Int
+  story Story @relation(fields: [storyId], references: [id])
+  sourceUrl String
+}

@@ -1,4 +1,11 @@
-import { Title, TopBar, Container, Filters, ProductsGroupList } from '@/shared/components/shared';
+import {
+  Title,
+  TopBar,
+  Container,
+  Filters,
+  ProductsGroupList,
+  Stories,
+} from '@/shared/components/shared';
 import {
   getCategoriesWithProducts,
   type GetSearchParams,
@@ -7,7 +14,7 @@ import { Suspense } from 'react';
 
 export default async function Home({ searchParams }: PageWithSearchParams<GetSearchParams>) {
   const categoriesWithProducts = await getCategoriesWithProducts(searchParams);
-  
+
   return (
     <>
       <Container className="mt-10">
@@ -17,6 +24,8 @@ export default async function Home({ searchParams }: PageWithSearchParams<GetSea
       <TopBar
         categories={categoriesWithProducts.filter((category) => category.products.length > 0)}
       />
+
+      <Stories />
 
       <Container className="mt-10 pb-14">
         <div className="flex gap-[80px]">
