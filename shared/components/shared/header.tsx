@@ -24,9 +24,19 @@ export const Header = (props: HeaderProps) => {
   const pathname = usePathname();
 
   useEffect(() => {
+    let toastMessage: string | undefined;
+
     if (searchParams.has('paid')) {
+      toastMessage = 'Заказ успешно оплачен! Информация отправлена на почту.';
+    }
+
+    if (searchParams.has('verified')) {
+      toastMessage = 'Ваш email адрес подтвержден.';
+    }
+
+    if (toastMessage) {
       setTimeout(() => {
-        toast.success('Заказ успешно оплачен! Информация отправлена на почту.');
+        toast.success(toastMessage);
       }, 500);
       router.replace(pathname);
     }
@@ -60,8 +70,6 @@ export const Header = (props: HeaderProps) => {
           <AuthModal
             open={authModalIsOpen}
             onClose={() => {
-              console.log('Закр окно');
-              
               setAuthModalIsOpen(false);
             }}
           />

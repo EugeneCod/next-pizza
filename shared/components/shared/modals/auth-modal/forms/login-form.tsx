@@ -1,5 +1,4 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -10,6 +9,7 @@ import { signIn } from 'next-auth/react';
 
 interface LoginFormProps {
   onClose: VoidFunction;
+  loading: boolean;
 }
 
 const defaultValues = {
@@ -18,7 +18,7 @@ const defaultValues = {
 };
 
 export const LoginForm = (props: LoginFormProps) => {
-  const { onClose } = props;
+  const { onClose, loading } = props;
   const form = useForm<LoginFormSchema>({ resolver: zodResolver(loginFormSchema), defaultValues });
   const isSubmitting = form.formState.isSubmitting;
 
@@ -33,7 +33,7 @@ export const LoginForm = (props: LoginFormProps) => {
       }
 
       toast.success('Вы успешно вошли в аккаунт', {
-        icon: '✅'
+        icon: '✅',
       });
 
       onClose();
@@ -48,18 +48,12 @@ export const LoginForm = (props: LoginFormProps) => {
   return (
     <FormProvider {...form}>
       <form className="flex flex-col gap-5" onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="flex justify-between items-center">
-          <div className="mr-2">
-            <Title text="Вход в аккаунт" size="md" className="font-bold" />
-            <p className="text-gray-400">Введите свою почту, чтобы войти в свой аккаунт</p>
-          </div>
-          <Image src="/assets/images/phone-icon.png" alt="phone-icon" width={60} height={60} />
-        </div>
+        <Title text="Вход в аккаунт" size="md" className="font-bold" />
 
         <FormInput name="email" label="Email" required />
         <FormInput name="password" label="Пароль" type="password" required />
 
-        <Button loading={isSubmitting} className="h-12 text-base" type="submit">
+        <Button loading={isSubmitting || loading} className="h-12 text-base" type="submit">
           Войти
         </Button>
       </form>
