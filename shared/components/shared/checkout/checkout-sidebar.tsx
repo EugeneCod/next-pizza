@@ -15,9 +15,6 @@ interface CheckoutSidebarProps {
 export const CheckoutSidebar = (props: CheckoutSidebarProps) => {
   const { totalAmount, loading, submitting } = props;
 
-  // TODO доделать связь с состоянием отправки формы
-
-
   const vatPrice = Math.trunc((totalAmount * VAT) / 100);
   const totalPrice = totalAmount + vatPrice + DELIVERY_PRICE;
 
