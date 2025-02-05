@@ -15,7 +15,7 @@ export interface GetSearchParams {
 const DEFAULT_MIN_PRICE = 0;
 const DEFAULT_MAX_PRICE = 1000;
 
-export async function getCategoriesWithProducts(params: GetSearchParams): Promise<CategoryWithProducts[]> {
+export async function getCategoriesWithProducts(params: GetSearchParams) {
   const sizes = params.sizes?.split(',').map(Number);
   const pizzaTypes = params.pizzaTypes?.split(',').map(Number);
   const ingredientsIds = params.ingredients?.split(',').map(Number);
@@ -72,5 +72,5 @@ export async function getCategoriesWithProducts(params: GetSearchParams): Promis
     },
   });
 
-  return filteredCategories;
+  return filteredCategories as CategoryWithProducts[];
 }

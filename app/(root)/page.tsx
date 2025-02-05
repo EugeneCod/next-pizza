@@ -10,6 +10,7 @@ import {
   getCategoriesWithProducts,
   type GetSearchParams,
 } from '@/shared/lib/get-categories-with-products';
+
 import { Suspense } from 'react';
 
 export default async function Home({ searchParams }: PageWithSearchParams<GetSearchParams>) {
